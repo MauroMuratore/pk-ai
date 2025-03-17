@@ -1,0 +1,65 @@
+Spiritomb
+Level: 100
+Timid Nature
+Ability: Pressure
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+EVs: 4 Atk / 252 SpA / 252 Spe
+- Dark Pulse
+- Psychic
+- Silver Wind
+- Shadow Ball
+
+Roserade
+Level: 100
+Mild Nature
+Ability: Natural Cure
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+EVs: 4 Atk / 252 SpA / 252 Spe
+- Energy Ball
+- Sludge Bomb
+- Extrasensory
+- Toxic
+
+Togekiss
+Level: 100
+Hardy Nature
+Ability: Hustle
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+EVs: 4 Atk / 252 SpA / 252 Spe
+- Air Slash
+- Aura Sphere
+- Water Pulse
+- Shock Wave
+
+Lucario
+Level: 100
+Careful Nature
+Ability: Steadfast
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+EVs: 4 Atk / 252 SpA / 252 Spe
+- Aura Sphere
+- Extreme Speed
+- Shadow Ball
+- Stone Edge
+
+Milotic
+Level: 100
+Docile Nature
+Ability: Marvel Scale
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+EVs: 4 Atk / 252 SpA / 252 Spe
+- Surf
+- Ice Beam
+- Dragon Pulse
+- Mirror Coat
+
+Dragonite @ Sitrus Berry
+Level: 100
+Sassy Nature
+Ability: Inner Focus
+IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
+EVs: 4 Atk / 252 SpA / 252 Spe
+- Fire Blast
+- Outrage
+- Hyper Beam
+- Safeguard
