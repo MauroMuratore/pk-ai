@@ -7,7 +7,7 @@ from tensorflow.keras.models import Model
 from rl.agents.dqn import DQNAgent
 from rl.memory import SequentialMemory
 from rl.policy import LinearAnnealedPolicy, EpsGreedyQPolicy
-from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.optimizers.legacy import Adam
 from gymnasium.utils.env_checker import check_env
 from poke_env import RandomPlayer
 from poke_env import SimpleHeuristicsPlayer
@@ -99,14 +99,14 @@ if __name__=="__main__":
         nb_actions=n_action,
         policy=policy,
         memory=memory,
-        nb_steps_warmup=1000,
+        nb_steps_warmup=100,
         gamma=0.5,
         target_model_update=1,
         delta_clip=0.01,
         enable_double_dqn=True,
     )
-    dqn.compile(Adam(learning_rate=0.00025), metrics=["mae"])
+    dqn.compile(Adam(learning_rate=0.0001), metrics=["mae"])
 
-    history =dqn.fit(train_dqnp, nb_steps=100, verbose=1)
+    history =dqn.fit(train_dqnp, nb_steps=20000, verbose=1)
     
     train_dqnp.close()

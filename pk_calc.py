@@ -41,7 +41,10 @@ def calc_pokemon(pokemon) -> np.array:
     # stats neuron 6
     pkmn_tot_stats = calc_tot_stats(pokemon.base_stats)
     # hp neuron 1
-    pkmn_hp = pokemon.current_hp / pokemon.max_hp
+    if pokemon.max_hp > 0:
+        pkmn_hp = pokemon.current_hp / pokemon.max_hp
+    else:
+        pkmn_hp = pokemon.current_hp
     # level neuron 1
     pkmn_lvl = pokemon.level / 100
     # status neuron 6
