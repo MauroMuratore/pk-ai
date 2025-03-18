@@ -2,7 +2,7 @@ import asyncio
 from dqn_player import DQNPlayer
 from test_player import SimpleRLPlayer
 from team_support import TeamSupport
-from tensorflow.keras.layers import Input, Dense, Concatenate
+from tensorflow.keras.layers import Input, Dense, Concatenate, Flatten
 from tensorflow.keras.models import Model
 from rl.agents.dqn import DQNAgent
 from rl.memory import SequentialMemory
@@ -35,24 +35,25 @@ def create_model(n_action):
     input_moves_opp_pkmn = input_l[:, offset_status_opp_pkmn: offset_opp_pkmn]
 
     offset_team = offset_opp_pkmn + SIZE_PKMN *5
-    input_team = input_l[:, offset_opp_pkmn, offset_team]
+    input_team = input_l[:, offset_opp_pkmn:offset_team]
 
     offset_opp_team = offset_team + SIZE_PKMN *5
     input_opp_team = input_l[:, offset_team: offset_opp_team]
 
-    fainted_team = input_l[:, -2]
-    fainted_opp_team = input[:, -1]
+    fainted_team = Flatten()(input_l[:, -2])
+    fainted_opp_team = Flatten()(input_l[:, -1])
 
-    l_field_m_pkmn = Dense(8, activation="relu")(Concatenate(input_field, input_moves_pkmn))
-    l_field_m_opp_pkmn = Dense(8, activation="relu")(Concatenate(input_field, input_moves_opp_pkmn))
+    
+    l_field_m_pkmn = Dense(8, activation="relu")(Concatenate()([input_field, input_moves_pkmn]))
+    l_field_m_opp_pkmn = Dense(8, activation="relu")(Concatenate()([input_field, input_moves_opp_pkmn]))
 
-    l_pkmn = Dense(32, activation="relu")(Concatenate(input_status_pkmn, input_moves_pkmn))
-    l_opp_pkmn = Dense(32, activation="relu")(Concatenate(input_status_opp_pkmn, input_moves_opp_pkmn))
+    l_pkmn = Dense(32, activation="relu")(Concatenate()([input_status_pkmn, input_moves_pkmn]))
+    l_opp_pkmn = Dense(32, activation="relu")(Concatenate()([input_status_opp_pkmn, input_moves_opp_pkmn]))
 
-    l_m_opp_pkmn = Dense(32, activation="relu")(Concatenate(input_status_opp_pkmn, input_moves_pkmn))
-    l_opp_m_pkmn = Dense(32, activation="relu")(Concatenate(input_status_pkmn, input_moves_opp_pkmn))
+    l_m_opp_pkmn = Dense(32, activation="relu")(Concatenate()([input_status_opp_pkmn, input_moves_pkmn]))
+    l_opp_m_pkmn = Dense(32, activation="relu")(Concatenate()([input_status_pkmn, input_moves_opp_pkmn]))
 
-    hidden_layer_1 = Dense(256, activation="relu")(Concatenate(
+    hidden_layer_1 = Dense(256, activation="relu")(Concatenate()([
         l_field_m_pkmn,
         l_field_m_opp_pkmn,
         l_pkmn,
@@ -63,7 +64,7 @@ def create_model(n_action):
         input_opp_team,
         fainted_team,
         fainted_opp_team
-    ))
+    ]))
     output_layer = Dense(n_action, activation="softmax")(hidden_layer_1)
     model = Model(inputs=input_l, outputs=output_layer)    
     return model
@@ -106,5 +107,6 @@ if __name__=="__main__":
     )
     dqn.compile(Adam(learning_rate=0.00025), metrics=["mae"])
 
-    dqn.fit(train_dqnp, nb_steps=10000)
+    history =dqn.fit(train_dqnp, nb_steps=100, verbose=1)
+    
     train_dqnp.close()
