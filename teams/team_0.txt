@@ -1,65 +1,59 @@
-Spiritomb
-Level: 100
-Timid Nature
-Ability: Pressure
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-EVs: 4 Atk / 252 SpA / 252 Spe
-- Dark Pulse
-- Psychic
-- Silver Wind
-- Shadow Ball
-
-Roserade
-Level: 100
-Mild Nature
-Ability: Natural Cure
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-EVs: 4 Atk / 252 SpA / 252 Spe
-- Energy Ball
-- Sludge Bomb
-- Extrasensory
-- Toxic
-
-Togekiss
+Swampert
 Level: 100
 Hardy Nature
-Ability: Hustle
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-EVs: 4 Atk / 252 SpA / 252 Spe
-- Air Slash
-- Aura Sphere
-- Water Pulse
-- Shock Wave
-
-Lucario
-Level: 100
-Careful Nature
-Ability: Steadfast
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-EVs: 4 Atk / 252 SpA / 252 Spe
-- Aura Sphere
-- Extreme Speed
-- Shadow Ball
-- Stone Edge
-
-Milotic
-Level: 100
-Docile Nature
-Ability: Marvel Scale
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-EVs: 4 Atk / 252 SpA / 252 Spe
+Ability: Torrent
+EVs: 1 Atk
+- Earthquake
+- Waterfall
 - Surf
-- Ice Beam
-- Dragon Pulse
-- Mirror Coat
+- Curse
 
-Dragonite @ Sitrus Berry
+Houndoom
 Level: 100
-Sassy Nature
-Ability: Inner Focus
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-EVs: 4 Atk / 252 SpA / 252 Spe
-- Fire Blast
-- Outrage
-- Hyper Beam
-- Safeguard
+Hardy Nature
+Ability: Early Bird
+EVs: 1 Atk
+- Flamethrower
+- Dark Pulse
+- Sucker Punch
+- Nasty Plot
+
+Rotom-Wash
+Level: 100
+Hardy Nature
+Ability: Levitate
+EVs: 1 Atk
+- Thunderbolt
+- Hydro Pump
+- Protect
+- Will-O-Wisp
+
+Breloom
+Level: 100
+Hardy Nature
+Ability: Effect Spore
+EVs: 1 Atk
+- Mach Punch
+- Seed Bomb
+- Sky Uppercut
+- Protect
+
+Gardevoir
+Level: 100
+Hardy Nature
+Ability: Synchronize
+EVs: 1 Atk
+- Psychic
+- Energy Ball
+- Thunderbolt
+- Calm Mind
+
+Gyarados
+Level: 100
+Bashful Nature
+Ability: Intimidate
+EVs: 1 Atk
+- Brine
+- Waterfall
+- Bite
+- Dragon Dance

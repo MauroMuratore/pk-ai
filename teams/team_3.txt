@@ -1,0 +1,49 @@
+Sceptile
+Level: 100
+Hardy Nature
+Ability: Overgrow
+EVs: 1 Atk
+- Energy Ball
+- Giga Drain
+- Leech Seed
+- Substitute
+
+Umbreon
+Level: 100
+Hardy Nature
+Ability: Synchronize
+EVs: 1 Atk
+- Payback
+- Moonlight
+- Pursuit
+- Curse
+
+Milotic
+Level: 100
+Hardy Nature
+Ability: Marvel Scale
+EVs: 1 Atk
+- Water Pulse
+- Surf
+- Recover
+- Toxic
+
+Lanturn
+Level: 100
+Hardy Nature
+Ability: Volt Absorb
+EVs: 1 Atk
+- Thunderbolt
+- Surf
+- Thunder Wave
+- Rain Dance
+
+Gallade
+Level: 100
+Hardy Nature
+Ability: Steadfast
+EVs: 1 Atk
+- Close Combat
+- Drain Punch
+- Zen Headbutt
+- Bulk Up
