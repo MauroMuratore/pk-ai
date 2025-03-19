@@ -47,3 +47,13 @@ EVs: 1 Atk
 - Drain Punch
 - Zen Headbutt
 - Bulk Up
+
+Charizard
+Level: 100
+Hardy Nature
+Ability: Blaze
+EVs: 1 Atk
+ - Flare Blitz
+ - Overheat
+ - Brick Break
+ - Aerial Ace
