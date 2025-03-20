@@ -22,7 +22,7 @@ async def battle(player_1, env_1, player_2, env_2):
     #env_2.close()
 
 async def battle_human(player):
-    await player.accept_challenges(None, 1)
+    await player.send_challenges("murotek", 1)
 
 def train(steps, i):
     tf.compat.v1.reset_default_graph()
@@ -72,7 +72,8 @@ if __name__=="__main__":
     tf.compat.v1.disable_eager_execution()
     #train(100000,0)
 
-    team_supp = TeamSupport()
+    team_supp = TeamSupport("teams_all")
+    team_supp_all = TeamSupport("teams_all")
     conf_player = AccountConfiguration("player_1", None)
     conf_sparring = AccountConfiguration("player_2", None)
 
@@ -87,8 +88,8 @@ if __name__=="__main__":
     #                                   )
 
     bot_player_1 = DQNPlayer(dqn_env_player, "./checkpoints/versione_1", battle_format="gen4ou", team=team_supp)
-    #bot_player_2 = DQNPlayer(dqn_env_sparring, "./checkpoints/versione_1", battle_format="gen4ou", team=team_supp)
-    #bot_sparring = DQNPlayer(dqn_env_sparring, "./checkpoints/versione_1", battle_format="gen4ou", team=team_supp)
+    asyncio.run(battle_human(bot_player_1))
+    #bot_player_2 = DQNPlayer(dqn_env_sparring, "./checkpoints/versione_1", battle_format="gen4ou", team=team_supp_all)
     #asyncio.run(battle(bot_player_1, dqn_env_player,bot_player_2, dqn_env_sparring ))
     #dqn_env_player.close()
     #dqn_env_sparring.close()
@@ -113,5 +114,3 @@ if __name__=="__main__":
     #print(f"Winning match {dqn_env_player.n_lost_battles}")
     #dqn_env_player.close()
     #dqn_env_sparring.close()
-
-    asyncio.run(battle_human(bot_player_1))

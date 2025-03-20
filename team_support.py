@@ -5,9 +5,9 @@ from poke_env.teambuilder import Teambuilder
 class TeamSupport(Teambuilder):
 
 
-    def __init__(self):
+    def __init__(self, dir):
         random.seed(42)
-        team_files = [ os.path.join("teams",f) for f in os.listdir("teams") if os.path.isfile(os.path.join("teams", f))]
+        team_files = [ os.path.join(dir,f) for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f))]
         self.teams = []
         for t_file in team_files:
             with open(t_file, "r") as file_team:

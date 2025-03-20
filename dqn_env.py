@@ -15,12 +15,19 @@ class DQNEnv(Gen4EnvSinglePlayer):
         action = self.dqn_agent.foward(state)
         battle_order = self.action_to_move(action)
         return battle_order
+    
+    def reward_computing_helper(self, battle, *, fainted_value = 0, hp_value = 0, number_of_pokemons = 6, starting_value = 0, status_value = 0, victory_value = 1, penality_turn=1):
+        reward = super().reward_computing_helper( battle, fainted_value , hp_value, number_of_pokemons, starting_value , status_value , victory_value )
+        for i in range(5):
+            if battle.turn > 25 + 10*i:
+                reward -= penality_turn
+        return reward
 
     def calc_reward(self, last_battle, current_battle) -> float:
         return self.reward_computing_helper(
             current_battle,
-            victory_value = 20,
-            fainted_value = 2,
+            victory_value = 10,
+            fainted_value = 1,
             hp_value = 0.01,
         )
     
