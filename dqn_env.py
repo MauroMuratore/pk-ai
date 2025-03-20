@@ -15,9 +15,6 @@ class DQNEnv(Gen4EnvSinglePlayer):
         action = self.dqn_agent.foward(state)
         battle_order = self.action_to_move(action)
         return battle_order
-    
-    def set_agent(self, dqn_agent):
-        self.dqn_agent=dqn_agent
 
     def calc_reward(self, last_battle, current_battle) -> float:
         return self.reward_computing_helper(

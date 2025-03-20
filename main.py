@@ -14,74 +14,88 @@ from dqn_player import DQNPlayer
 import numpy as np
 import util
 from rl.callbacks import Callback
+import time
 
-async def battle(env1, env2):
-    await env1.battle_against(env2, n_battles=1)
-    env1.close()
-    env2.close()
+async def battle(player_1, env_1, player_2, env_2):
+    await player_1.battle_against(player_2, n_battles=1)
+    #env_1.close()
+    #env_2.close()
 
-def train(epochs, steps):
+async def battle_human(player):
+    await player.accept_challenges(None, 1)
+
+def train(steps, i):
+    tf.compat.v1.reset_default_graph()
+    session = tf.compat.v1.Session()
+    tf.compat.v1.keras.backend.set_session(session)
+
     team_supp = TeamSupport()
     conf_player = AccountConfiguration("dqn_traning", None)
-    conf_sparring = AccountConfiguration("dqn_sparring", None)
+    conf_sparring = AccountConfiguration(f"dqn_sparring_{i}", None)
     dqn_env_sparring = DQNEnv(battle_format="gen4ou",
                               account_configuration=conf_sparring,
-                              opponent=conf_sparring.username)
+                              opponent=conf_player.username)
     file_model_sparring="./checkpoints/versione_1"
     file_model_training="./checkpoints/versione_1"
-    for i in range(epochs):
-        bot_sparring = DQNPlayer(
-            dqn_env_sparring,
-            file_model_sparring,
-            battle_format="gen4ou",
-            team=team_supp
-        )
-        dqn_env_player =DQNEnv(battle_format="gen4ou",
-            account_configuration=conf_player,
-            team=team_supp,
-            opponent=bot_sparring,
-            start_challenging=True
-        )
-        n_action = dqn_env_player.action_space.n
 
-        model_training = util.create_model(n_action)
-        model_training.load_weights(file_model_training)
-
-        agent_training = util.create_agent(model_training, n_action)
-
-
-        #reset_callback = Callback()
-        #reset_callback.on_step_end = lambda step, logs: dqn_env_player.reset() if logs.get("done") else None
- 
-        agent_training.fit(dqn_env_player, steps)
-
-        model_training.save_weights(file_model_training, overwrite=True)
-
-        print(f"Winning match {dqn_env_player.n_won_battles}")
-        print(f"Winning match {dqn_env_player.n_lost_battles}")
-        bot_sparring.close()
-        dqn_env_player.close()
+    bot_sparring = DQNPlayer(
+        dqn_env_sparring,
+        file_model_sparring,
+        battle_format="gen4ou",
+        team=team_supp
+    )
+    dqn_env_player =DQNEnv(battle_format="gen4ou",
+        account_configuration=conf_player,
+        team=team_supp,
+        opponent=bot_sparring,
+        start_challenging=True
         
+    )
+    #dqn_env_player.set_opponent(bot_sparring)
+    n_action = dqn_env_player.action_space.n
 
+    model_training = util.create_model(n_action)
+    model_training.load_weights(file_model_training)
+
+    agent_training = util.create_agent(model_training, n_action)
+
+    agent_training.fit(dqn_env_player, steps)
+
+    model_training.save_weights(file_model_training, overwrite=True)
+
+    print(f"Winning match {dqn_env_player.n_won_battles}")
+    print(f"Losing match {dqn_env_player.n_lost_battles}")
+    dqn_env_player.close()
+    
 
 if __name__=="__main__":
     tf.compat.v1.disable_eager_execution()
-    train(3, 60)
-    #team_supp = TeamSupport()
-    #conf_player = AccountConfiguration("dqn_traning", None)
-    #conf_sparring = AccountConfiguration("dqn_sparring", None)
+    #train(100000,0)
 
-    #dqn_env_sparring = DQNEnv(battle_format="gen4ou",
-    #                          account_configuration=conf_sparring,
-    #                          opponent=conf_sparring.username)
+    team_supp = TeamSupport()
+    conf_player = AccountConfiguration("player_1", None)
+    conf_sparring = AccountConfiguration("player_2", None)
+
+    dqn_env_sparring = DQNEnv(battle_format="gen4ou",
+                              account_configuration=conf_sparring,
+                              opponent=conf_player.username)
+    dqn_env_player = DQNEnv(battle_format="gen4ou",
+                              account_configuration=conf_player,
+                              opponent=None)
     #sh_player = SimpleHeuristicsPlayer(battle_format="gen4ou",
     #                                   team=team_supp, 
     #                                   )
 
-    #bot_player = DQNPlayer(dqn_env_player, "./checkpoints/versione_1", battle_format="gen4ou", team=team_supp)
+    bot_player_1 = DQNPlayer(dqn_env_player, "./checkpoints/versione_1", battle_format="gen4ou", team=team_supp)
+    #bot_player_2 = DQNPlayer(dqn_env_sparring, "./checkpoints/versione_1", battle_format="gen4ou", team=team_supp)
     #bot_sparring = DQNPlayer(dqn_env_sparring, "./checkpoints/versione_1", battle_format="gen4ou", team=team_supp)
-    #asyncio.run(battle(bot_player, bot_sparring))
-    #dqn_env_player =DQNEnv(battle_format="gen4ou",
+    #asyncio.run(battle(bot_player_1, dqn_env_player,bot_player_2, dqn_env_sparring ))
+    #dqn_env_player.close()
+    #dqn_env_sparring.close()
+    #dqn_env_player =DQNEnv(battle_format="gen4ou",#sh_player = SimpleHeuristicsPlayer(battle_format="gen4ou",
+    #                                   team=team_supp, 
+    #                                   )
+
     #                       account_configuration=conf_player,
     #                       team=team_supp,
     #                       opponent=bot_sparring,
@@ -99,3 +113,5 @@ if __name__=="__main__":
     #print(f"Winning match {dqn_env_player.n_lost_battles}")
     #dqn_env_player.close()
     #dqn_env_sparring.close()
+
+    asyncio.run(battle_human(bot_player_1))
