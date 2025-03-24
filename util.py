@@ -1,24 +1,27 @@
-from tensorflow.keras.layers import Input, Dense, Concatenate, Flatten
-from tensorflow.keras.models import Model
+from keras.layers import Input, Dense, Concatenate, Flatten
+from keras.models import Model
 from rl.agents.dqn import DQNAgent
 from rl.memory import SequentialMemory
 from rl.policy import LinearAnnealedPolicy, EpsGreedyQPolicy
-from tensorflow.keras.optimizers.legacy import Adam
+from keras.optimizers.legacy import Adam
+import pk_calc
 
-SIZE_FIELD = 12
-SIZE_STATUS_PKMN = 23
-SIZE_MOVE = 25
-SIZE_PKMN = 23 + 25*4
+SIZE_FIELD = pk_calc.SIZE_FIELD
+SIZE_BODY_PKMN = pk_calc.SIZE_BODY_PKMN 
+SIZE_MOVE = pk_calc.SIZE_MOVE
+SIZE_PKMN = SIZE_BODY_PKMN + SIZE_MOVE*4
+
+
 def create_model(n_action) -> Model:
-    input_l = Input(shape= (1490,))
+    input_l = Input(shape= (1766,))
     input_field = input_l[:, :SIZE_FIELD]
 
-    offset_status_pkmn = SIZE_FIELD + SIZE_STATUS_PKMN
+    offset_status_pkmn = SIZE_FIELD + SIZE_BODY_PKMN
     offset_pkmn = SIZE_FIELD + SIZE_PKMN
     input_status_pkmn = input_l[:, SIZE_FIELD:offset_status_pkmn]
     input_moves_pkmn = input_l[:, offset_status_pkmn: offset_pkmn]
     
-    offset_status_opp_pkmn = offset_pkmn + SIZE_STATUS_PKMN
+    offset_status_opp_pkmn = offset_pkmn + SIZE_BODY_PKMN
     offset_opp_pkmn = offset_pkmn + SIZE_PKMN
     input_status_opp_pkmn = input_l[:, offset_pkmn: offset_status_opp_pkmn]
     input_moves_opp_pkmn = input_l[:, offset_status_opp_pkmn: offset_opp_pkmn]

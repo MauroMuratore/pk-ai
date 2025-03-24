@@ -78,7 +78,7 @@ class DQNEnv(Gen4EnvSinglePlayer):
 
         opp_team = np.concatenate(l_o_team)
         opp_fainted_mon_team = len([mon for mon in battle.opponent_team.values() if mon.fainted]) / 6
-        if False:
+        if True:
             print(f"weather {len(weather)}")
             print(f"side {len(side_condition) + len(opp_side_condition)}")
             print(f"pkmn active {len(pkmn_active)}")
@@ -97,6 +97,7 @@ class DQNEnv(Gen4EnvSinglePlayer):
             opp_fainted_mon_team
         ], axis=None)
         self.len_space = len(v_return)
+        print(self.len_space)
         return v_return
     
     def describe_embedding(self) -> Space:
