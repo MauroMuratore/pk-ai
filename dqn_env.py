@@ -17,10 +17,18 @@ class DQNEnv(Gen4EnvSinglePlayer):
         return battle_order
     
     def reward_computing_helper(self, battle, *, fainted_value = 0, hp_value = 0, number_of_pokemons = 6, starting_value = 0, status_value = 0, victory_value = 1, penality_turn=1):
-        reward = super().reward_computing_helper( battle, fainted_value , hp_value, number_of_pokemons, starting_value , status_value , victory_value )
-        for i in range(5):
+        reward = super().reward_computing_helper( battle,  
+                                                 fainted_value=fainted_value , 
+                                                 hp_value=hp_value, 
+                                                 number_of_pokemons=number_of_pokemons, 
+                                                 starting_value=starting_value , 
+                                                 status_value=status_value , 
+                                                 victory_value=victory_value )
+        for i in range(10):
             if battle.turn > 25 + 10*i:
                 reward -= penality_turn
+            else:
+                break
         return reward
 
     def calc_reward(self, last_battle, current_battle) -> float:
@@ -29,6 +37,7 @@ class DQNEnv(Gen4EnvSinglePlayer):
             victory_value = 10,
             fainted_value = 1,
             hp_value = 0.01,
+            penality_turn=2
         )
     
     def embed_battle(self, battle: AbstractBattle):
