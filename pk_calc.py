@@ -5,11 +5,12 @@ from poke_env.environment.pokemon_type import PokemonType
 from poke_env.environment.status import Status
 from poke_env.environment.move_category import MoveCategory
 
+SIZE_TURN = 1
 SIZE_WEATHER = 4
 SIZE_SIDE_EFFECTS_SELF = 4
 SIZE_SIDE_EFFECTS_OPP = 4
 SIZE_TYPE_PKMN = 9
-SIZE_FIELD = SIZE_WEATHER + SIZE_SIDE_EFFECTS_SELF + SIZE_SIDE_EFFECTS_OPP #weather + side effects self + side effects opp
+SIZE_FIELD = SIZE_TURN + SIZE_WEATHER + SIZE_SIDE_EFFECTS_SELF + SIZE_SIDE_EFFECTS_OPP #turn + weather + side effects self + side effects opp
 SIZE_BODY_PKMN = 46 #type + stats + hp + level + status + item + ability
 SIZE_MOVE = 25 # accuracy + base power + move category + heal + drain + recoil + protect + pp + status + type
 
@@ -54,7 +55,7 @@ def calc_pokemon(pokemon) -> np.array:
     else:
         pkmn_hp = pokemon.current_hp
     # level neuron 1
-    pkmn_lvl = pokemon.level / 100
+    pkmn_lvl = pokemon.level / 100 # da togliere? sempre 1 nel nostro caso
     # status neuron 6
     pkmn_status = calc_status(pokemon.status)
     # items neuron 16
@@ -91,6 +92,22 @@ def calc_type(type_1, type_2 = None) -> np.array:
     if type_2 != None:
         type_return = type_return + index_type(type_2)
     return type_return
+
+def calc_status(status) -> np.array:
+    status_return = np.zeros(6)
+    if status == Status.BRN:
+        status_return[0] = 1
+    elif status == Status.FRZ:
+        status_return[1] = 1
+    elif status == Status.PAR:
+        status_return[2] = 1
+    elif status == Status.PSN:
+        status_return[3] = 1
+    elif status == Status.SLP:
+        status_return[4] = 1
+    elif status == Status.TOX:
+        status_return[5] = 1
+    return status_return
  
 def calc_item(item_pkmn) -> np.array:
     item_return = np.zeros(16)
@@ -153,7 +170,23 @@ def calc_ability(ability_pkmn) -> np.array:
         ability_return[6] = 1        
     return ability_return
     
-#def calc_boost()
+def calc_boost(boost) -> np.array:
+    boost_return = np.zeros(5)
+    for stat, value in boost.items():
+        l_stat = stat.lower()
+        if l_stat == "atk":
+            boost_return[0] = min((value + 6.0)/12.0, 1)
+        elif l_stat == "def":
+            boost_return[1] = min((value + 6.0)/12.0, 1)
+        elif l_stat == "spa":
+            boost_return[2] = min((value + 6.0)/12.0, 1)
+        elif l_stat == "spd":
+            boost_return[3] = min((value + 6.0)/12.0, 1)
+        elif l_stat == "spe":
+            boost_return[4] = min((value + 6.0)/12.0, 1)
+    return boost_return
+    
+    
 
 
 def index_type(type_pkmn) -> np.array:
@@ -196,23 +229,6 @@ def calc_tot_stats(stats_pkmn) -> np.array:
         elif l_stat == "spe":
             stats_return[5] = min(value/250.0, 1)
     return stats_return
-
-
-def calc_status(status) -> np.array:
-    status_return = np.zeros(6)
-    if status == Status.BRN:
-        status_return[0] = 1
-    elif status == Status.FRZ:
-        status_return[1] = 1
-    elif status == Status.PAR:
-        status_return[2] = 1
-    elif status == Status.PSN:
-        status_return[3] = 1
-    elif status == Status.SLP:
-        status_return[4] = 1
-    elif status == Status.TOX:
-        status_return[5] = 1
-    return status_return
 
 def calc_move(move) -> np.array:
     move_return = np.zeros(10)

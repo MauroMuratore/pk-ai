@@ -4,13 +4,12 @@ from rl.policy import LinearAnnealedPolicy, EpsGreedyQPolicy
 from rl.memory import SequentialMemory
 from rl.agents.dqn import DQNAgent
 import tensorflow as tf
-from tensorflow.keras.optimizers.legacy import Adam
 import numpy as np
 import util
 
 class DQNPlayer(Player):
 
-    def __init__(self, dqn_env, ck_point_model, *args, **kargs):
+    def __init__(self, dqn_env, ck_point_model=None, *args, **kargs):
         super().__init__(*args, **kargs)
         self.model = util.create_model(dqn_env.action_space.n)
         self.model.load_weights(ck_point_model)
