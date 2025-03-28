@@ -60,7 +60,7 @@ class AbstractDQNAgent(Agent):
 
     def compute_batch_q_values(self, state_batch):
         batch = self.process_state_batch(state_batch)
-        print(f"dqn 63{batch}")
+        #print(f"dqn 63{batch}")
         q_values = self.model.predict_on_batch(batch)
         assert q_values.shape == (len(state_batch), self.nb_actions)
         return q_values
@@ -222,7 +222,9 @@ class DQNAgent(AbstractDQNAgent):
     def forward(self, observation):
         # Select an action.
         state = self.memory.get_recent_state(observation)[0]
-        print(f"DQNAgent 224 {state} index 0")
+        if len(state) == 2:
+            state = state[0]
+        #print(f"DQNAgent 224 {state} index 0")
         q_values = self.compute_q_values(state)
         if self.training:
             action = self.policy.select_action(q_values=q_values)
@@ -268,15 +270,15 @@ class DQNAgent(AbstractDQNAgent):
             # Prepare and validate parameters.
             state0_batch = self.process_state_batch(state0_batch)
             state1_batch = self.process_state_batch(state1_batch)
-            print(f"dqn 271 reshape state1_batch")
+            #print(f"dqn 271 reshape state1_batch")
             state0_batch = np.reshape(state0_batch, (self.batch_size, state0_batch.shape[-1]))
             state1_batch = np.reshape(state1_batch, (self.batch_size, state1_batch.shape[-1]))
             terminal1_batch = np.array(terminal1_batch)
             reward_batch = np.array(reward_batch)
-            print(f"dqn 273 {len(action_batch)}")
-            print(f"dqn 273 {len(reward_batch)}")
-            print(f"dqn 273 {state1_batch.shape}")
-            print(f"dqn 273 {terminal1_batch.shape}")
+            #print(f"dqn 273 {len(action_batch)}")
+            #print(f"dqn 273 {len(reward_batch)}")
+            #print(f"dqn 273 {state1_batch.shape}")
+            #print(f"dqn 273 {terminal1_batch.shape}")
             assert reward_batch.shape == (self.batch_size,)
             assert terminal1_batch.shape == reward_batch.shape
             assert len(action_batch) == len(reward_batch)
